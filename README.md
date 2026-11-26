@@ -6,8 +6,6 @@ The University Management System (UMS) is a web-based application developed to s
 
 The system aims to make academic information easier to manage, improve access to student and course records, and provide a simple and user-friendly experience.
 
-This project was developed as a Software Engineering academic project to demonstrate practical front-end development, role-based access, and the implementation of a university management application.
-
 ## Features
 
 ### 1. User Authentication and Role-Based Access
