@@ -1,0 +1,85 @@
+/* ==========================================
+   DESIGN TOKENS
+========================================== */
+
+:root {
+    --primary: #315bdb;
+    --primary-dark: #2448b5;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --text-soft: #94a3b8;
+    --border: #e2e8f0;
+    --border-input: #cbd5e1;
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --danger: #dc2626;
+    --sidebar-bg: #1e293b;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+   BASE
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+}
+
+button {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+    filter: brightness(0.92);
+}
+
+button:not(:disabled):active {
+    transform: scale(0.98);
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(49, 91, 219, 0.3);
+    outline-offset: 2px;
+}
+
+/* Primary (blue) buttons */
+#add-student-btn,
+#add-teacher-btn,
+#add-course-btn,
+#add-enrollment-btn,
+#add-grade-btn,
+#save-settings-btn,
+#change-password-btn,
+#save-profile-btn,
+#export-csv-btn,
+#export-pdf-btn,
+.form-actions button[type="submit"],
+.login-container button {
+    background: var(--primary);
+    color: white;
+    padding: 11px 18px;
+    border-radius: 7px;
+}
