@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="University Management System - manage students, teachers, courses, enrollments and grades." />
+    <title>University Management System</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/pages.css" />
+    <link rel="stylesheet" href="css/tables.css" />
+    <link rel="stylesheet" href="css/modals-forms.css" />
+    <link rel="stylesheet" href="css/reports.css" />
+    <link rel="stylesheet" href="css/settings.css" />
+    <link rel="stylesheet" href="css/toast.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body>
+
+    <!-- Toast messages appear here -->
+    <div id="toast-container" aria-live="polite"></div>
+
+    <!-- Login Page -->
+    <section class="login-page" id="login-page">
+
+        <div class="login-container">
+
+            <h1>University Management System</h1>
+            <p>Sign in to access your account</p>
+
+            <form id="login-form">
+
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+
+                <p id="login-error"></p>
+
+                <button type="submit">Login</button>
+
+            </form>
+
+            <div class="demo-credentials">
+                <h4>Demo accounts</h4>
+                <p><strong>Admin:</strong> admin@ums.com / admin123</p>
+                <p><strong>Teacher:</strong> teacher@ums.com / teacher123</p>
+                <p><strong>Student:</strong> student@ums.com / student123</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div>
+            <div class="sidebar-header">
+                <h2>University MS</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-page="dashboard">Dashboard</a>
+                <a href="#" class="nav-link" data-page="my-courses">My Courses</a>
+                <a href="#" class="nav-link" data-page="students">Students</a>
+                <a href="#" class="nav-link" data-page="teachers">Teachers</a>
+                <a href="#" class="nav-link" data-page="courses">Courses</a>
+                <a href="#" class="nav-link" data-page="enrollments">Enrollments</a>
+                <a href="#" class="nav-link" data-page="grades">Grades</a>
+                <a href="#" class="nav-link" data-page="reports">Reports</a>
+                <a href="#" class="nav-link" data-page="profile">My Profile</a>
+                <a href="#" class="nav-link" data-page="settings">Settings</a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="admin-info">
+                <h4 id="logged-in-name">Admin User</h4>
+                <p id="logged-in-role">Administrator</p>
+            </div>
+
+            <button id="logout-btn" class="logout-btn" type="button">
+                Logout
+            </button>
+        </div>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <div class="topbar">
+
+            <div class="page-heading">
+                <h1>Dashboard</h1>
+                <p id="welcome-message">Welcome back!</p>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="profile">
+                    <span id="topbar-user-name">Admin</span>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+
+            <!-- Dashboard Page -->
+            <section class="page-section active" id="dashboard">
+
+                <section class="stats-grid">
+
+                    <div class="stat-card">
+                        <h3 id="total-students-title">Total Students</h3>
+                        <h2 id="total-students-count">0</h2>
+                        <p id="total-students-description">Registered students</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3 id="active-students-title">Active Students</h3>
+                        <h2 id="active-students-count">0</h2>
+                        <p id="active-students-description">Currently active students</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3 id="total-courses-title">Total Courses</h3>
+                        <h2 id="total-courses-count">0</h2>
+                        <p id="total-courses-description">Available courses</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3 id="total-enrollments-title">Total Enrollments</h3>
+                        <h2 id="total-enrollments">0</h2>
+                        <p id="total-enrollments-description">Current enrollments</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3 id="total-departments-title">Departments</h3>
+                        <h2 id="total-departments-count">0</h2>
+                        <p id="total-departments-description">Academic departments</p>
+                    </div>
+
+                </section>
+
+
+                <div class="dashboard-sections">
+
+                    <section class="recent-activities">
+                        <h2>Recent Activities</h2>
+                        <p>Recent university updates will appear here.</p>
+                    </section>
+
+
+                    <section class="quick-actions">
+                        <h2>Quick Actions</h2>
+
+                        <!-- Admin Actions -->
+                        <div id="admin-quick-actions">
+                            <button type="button" id="quick-add-student">Add Student</button>
+                            <button type="button" id="quick-add-course">Add Course</button>
+                            <button type="button" class="nav-link" data-page="reports">View Reports</button>
+                        </div>
+
+                        <!-- Teacher Actions -->
+                        <div id="teacher-quick-actions" style="display: none;">
+                            <button type="button" class="nav-link" data-page="courses">View My Courses</button>
+                            <button type="button" class="nav-link" data-page="enrollments">View Enrollments</button>
+                            <button type="button" class="nav-link" data-page="grades">Manage Grades</button>
+                        </div>
+
+                        <!-- Student Actions -->
+                        <div id="student-quick-actions" style="display: none;">
+                            <button type="button" class="nav-link" data-page="my-courses">View My Courses</button>
+                            <button type="button" class="nav-link" data-page="grades">View My Grades</button>
+                            <button type="button" class="nav-link" data-page="profile">View My Profile</button>
+                        </div>
+                    </section>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- My Courses Page (students) -->
+            <section class="page-section" id="my-courses">
+
+                <div class="students-header">
+                    <div>
+                        <h2>My Courses</h2>
+                        <p>Courses you are registered for.</p>
+                    </div>
+                </div>
+
+                <div class="students-table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Credit Hours</th>
+                                <th>Instructor</th>
+                                <th>Enrollment Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="my-courses-table-body">
+                            <!-- The student's courses will appear here -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Students Page -->
+            <section class="page-section" id="students">
+
+                <div class="students-header">
+
+                    <div>
+                        <h2>Student Management</h2>
+                        <p>Manage all registered students.</p>
+                    </div>
+
+                    <input type="search" id="student-search" placeholder="Search students..." />
+
+                    <button type="button" id="add-student-btn">+ Add Student</button>
+
+                </div>
+
+
+                <!-- Student Status Filter -->
+                <select id="student-status-filter">
+                    <option value="all">All Students</option>
+                    <option value="Active">Active Students</option>
+                    <option value="Inactive">Inactive Students</option>
+                </select>
+
+
+                <!-- Students Table -->
+                <div class="students-table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="students-table-body">
+                            <!-- Student records will appear here -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- Teachers Page -->
+            <section class="page-section" id="teachers">
+
+                <div class="students-header">
+
+                    <div>
+                        <h2>Teacher Management</h2>
+                        <p>Manage registered teachers and their accounts.</p>
+                    </div>
+
+                    <input type="search" id="teacher-search" placeholder="Search teachers..." />
+
+                    <button type="button" id="add-teacher-btn">+ Add Teacher</button>
+
+                </div>
+
+                <div class="students-table-container">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="teachers-table-body">
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Courses Page -->
+            <section class="page-section" id="courses">
+
+                <div class="students-header">
+
+                    <div>
+                        <h2>Course Management</h2>
+                        <p>Manage all university courses.</p>
+                    </div>
+
+                    <input type="search" id="course-search" placeholder="Search courses..." />
+
+                    <button type="button" id="add-course-btn">+ Add Course</button>
+
+                </div>
+
+                <div class="students-table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Department</th>
+                                <th>Credit Hours</th>
+                                <th>Instructor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="courses-table-body">
+                            <!-- Courses will appear here -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Enrollments Page -->
+            <section class="page-section" id="enrollments">
+
+                <div class="enrollment-header">
+
+                    <div>
+                        <h2>Enrollment Management</h2>
+                        <p>Manage student course registrations.</p>
+                    </div>
+
+                </div>
+
+
+                <!-- Enrollment Statistics -->
+                <div class="enrollment-stats">
+
+                    <div class="stat-card">
+                        <h3>Total Enrollments</h3>
+                        <p id="enrollment-total-count">0</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Completed Enrollments</h3>
+                        <p id="enrollment-completed-count">0</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Dropped Enrollments</h3>
+                        <p id="enrollment-dropped-count">0</p>
+                    </div>
+
+                </div>
+
+
+                <!-- Enrollment Toolbar -->
+                <div class="enrollment-toolbar">
+
+                    <div class="enrollment-search">
+                        <input type="search" id="enrollment-search" placeholder="Search by student or course..." />
+                    </div>
+
+                    <div class="enrollment-filter">
+                        <select id="enrollment-status-filter">
+                            <option value="all">All Statuses</option>
+                            <option value="Enrolled">Enrolled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Dropped">Dropped</option>
+                        </select>
+                    </div>
+
+                    <button type="button" id="add-enrollment-btn">+ Add Enrollment</button>
+
+                </div>
+
+
+                <!-- Enrollment Table -->
+                <div class="students-table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Enrollment ID</th>
+                                <th>Student Name</th>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                                <th>Enrollment Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="enrollments-table-body">
+                            <!-- Enrollment records will appear here -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Grades Page -->
+            <section class="page-section" id="grades">
+
+                <div class="grades-header">
+                    <h2>Grade Management</h2>
+                    <p>Manage student academic performance.</p>
+                </div>
+
+                <!-- Grade Statistics -->
+                <div class="grades-stats">
+
+                    <div class="stat-card">
+                        <h3>Total Grade Records</h3>
+                        <p id="total-grades-count">0</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Average Score</h3>
+                        <p id="average-grade-score">0</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Passed Students</h3>
+                        <p id="passed-students-count">0</p>
+                    </div>
+
+                </div>
+
+                <!-- Grades Toolbar -->
+                <div class="grades-toolbar">
+
+                    <div class="grades-search">
+                        <input type="search" id="grades-search" placeholder="Search by student or course...">
+                    </div>
+
+                    <button type="button" id="add-grade-btn">+ Add Grade</button>
+
+                </div>
+
+                <!-- Grades Table -->
+                <div class="students-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                                <th>Score</th>
+                                <th>Letter Grade</th>
+                                <th>Grade Point</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="grades-table-body">
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+
+
+            <!-- Reports Page -->
+            <section class="page-section" id="reports">
+
+                <div class="reports-header">
+                    <h2>University Reports</h2>
+                    <p>Overview of university statistics and academic performance.</p>
+
+                    <div class="report-actions">
+                        <button type="button" id="export-csv-btn">Export to CSV</button>
+                        <button type="button" id="export-pdf-btn">Export to PDF</button>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="reports-grid">
+
+                    <div class="report-card">
+                        <h3>Total Students</h3>
+                        <p id="report-total-students">0</p>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Total Courses</h3>
+                        <p id="report-total-courses">0</p>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Total Enrollments</h3>
+                        <p id="report-total-enrollments">0</p>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Total Grades</h3>
+                        <p id="report-total-grades">0</p>
+                    </div>
+
+                </div>
+
+                <!-- Detailed Reports -->
+                <div class="reports-details">
+
+                    <div class="report-section">
+                        <h3>Students by Department</h3>
+                        <div id="department-report"></div>
+                    </div>
+
+                    <div class="report-section">
+                        <h3>Grade Distribution</h3>
+                        <div id="grade-report"></div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Settings Page -->
+            <section class="page-section" id="settings">
+
+                <div class="settings-header">
+                    <h2>System Settings</h2>
+                    <p>Manage university information and academic configurations.</p>
+                </div>
+
+                <!-- University Information -->
+                <div class="settings-card">
+                    <h3>University Information</h3>
+
+                    <div class="form-group">
+                        <label for="university-name">University Name</label>
+                        <input type="text" id="university-name" placeholder="Enter university name"
+                            value="Bahir Dar University">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="university-email">Contact Email</label>
+                        <input type="email" id="university-email" placeholder="Enter contact email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="university-phone">Contact Phone</label>
+                        <input type="tel" id="university-phone" placeholder="Enter phone number">
+                    </div>
+
+                </div>
+
+                <!-- Academic Settings -->
+                <div class="settings-card">
+                    <h3>Academic Settings</h3>
+
+                    <div class="form-group">
+                        <label for="academic-year">Current Academic Year</label>
+                        <input type="text" id="academic-year" placeholder="Example: 2026/2027">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="semester">Current Semester</label>
+                        <select id="semester">
+                            <option value="First Semester">First Semester</option>
+                            <option value="Second Semester">Second Semester</option>
+                            <option value="Summer">Summer</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Change Password -->
+                <div class="settings-card">
+                    <h3>Change Password</h3>
+
+                    <div class="form-group">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" id="current-password" placeholder="Enter current password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" placeholder="Enter new password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm New Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm new password">
+                    </div>
+
+                    <button type="button" id="change-password-btn">
+                        Change Password
+                    </button>
+                </div>
+
+                <button type="button" id="save-settings-btn">Save Settings</button>
+
+            </section>
+
+
+            <!-- Profile Page -->
+            <section class="page-section" id="profile">
+
+                <div class="settings-header">
+                    <h2>My Profile</h2>
+                    <p>View and manage your personal information.</p>
+                </div>
+
+                <div class="settings-card">
+
+                    <h3>Personal Information</h3>
+
+                    <div class="form-group">
+                        <label for="profile-name">Full Name</label>
+                        <input type="text" id="profile-name" placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile-email">Email Address</label>
+                        <input type="email" id="profile-email" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile-role">Account Role</label>
+                        <input type="text" id="profile-role" readonly>
+                    </div>
+
+                    <button type="button" id="save-profile-btn">
+                        Save Profile
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- Add Student Modal -->
+        <div class="modal" id="student-modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Add New Student</h2>
+                    <button type="button" id="close-modal-btn" aria-label="Close">&times;</button>
+                </div>
+
+                <form id="student-form">
+
+                    <div class="form-group">
+                        <label for="student-id">Student ID</label>
+                        <input type="text" id="student-id" placeholder="Enter student ID" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-name">Full Name</label>
+                        <input type="text" id="student-name" placeholder="Enter full name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-email">Email</label>
+                        <input type="email" id="student-email" placeholder="Enter email address" required />
+                    </div>
+
+                    <!-- Student Login Password -->
+                    <div class="form-group">
+                        <label for="student-password">Password (required for new students)</label>
+                        <input type="password" id="student-password" placeholder="Create student's login password"
+                            minlength="6" />
+                        <small class="field-hint">When editing, fill this in only to reset the student's password.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-department">Department</label>
+                        <input type="text" id="student-department" placeholder="Enter department" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-year">Academic Year</label>
+
+                        <select id="student-year" required>
+                            <option value="">Select year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                            <option value="5">5th Year</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-status">Student Status</label>
+
+                        <select id="student-status" required>
+                            <option value="">Select status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancel-modal-btn">Cancel</button>
+                        <button type="submit">Save Student</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Student Details Modal -->
+        <div class="modal" id="student-details-modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Student Details</h2>
+                    <button type="button" id="close-details-modal" aria-label="Close">&times;</button>
+                </div>
+
+                <div class="student-details">
+
+                    <p>
+                        <strong>Student ID:</strong>
+                        <span id="details-id"></span>
+                    </p>
+
+                    <p>
+                        <strong>Full Name:</strong>
+                        <span id="details-name"></span>
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        <span id="details-email"></span>
+                    </p>
+
+                    <p>
+                        <strong>Department:</strong>
+                        <span id="details-department"></span>
+                    </p>
+
+                    <p>
+                        <strong>Academic Year:</strong>
+                        <span id="details-year"></span>
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span id="details-status"></span>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Add Teacher Modal -->
+        <div class="modal" id="teacher-modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Add New Teacher</h2>
+                    <button type="button" id="close-teacher-modal" aria-label="Close">&times;</button>
+                </div>
+
+                <form id="teacher-form">
+
+                    <div class="form-group">
+                        <label for="teacher-first-name">First Name</label>
+                        <input type="text" id="teacher-first-name" placeholder="Enter first name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher-last-name">Last Name</label>
+                        <input type="text" id="teacher-last-name" placeholder="Enter last name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher-email">Email</label>
+                        <input type="email" id="teacher-email" placeholder="Enter email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher-password">Password</label>
+                        <input type="password" id="teacher-password" placeholder="Create teacher password"
+                            minlength="6">
+                        <small class="field-hint">When editing, fill this in only to reset the password.</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancel-teacher-modal">
+                            Cancel
+                        </button>
+
+                        <button type="submit">Save Teacher</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Add Course Modal -->
+        <div class="modal" id="course-modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Add New Course</h2>
+                    <button type="button" id="close-course-modal" aria-label="Close">&times;</button>
+                </div>
+
+                <form id="course-form">
+
+                    <div class="form-group">
+                        <label for="course-code">Course Code</label>
+                        <input type="text" id="course-code" placeholder="Enter course code" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-name">Course Name</label>
+                        <input type="text" id="course-name" placeholder="Enter course name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-department">Department</label>
+                        <input type="text" id="course-department" placeholder="Enter department" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-credits">Credit Hours</label>
+                        <input type="number" id="course-credits" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-instructor">Assigned Teacher</label>
+
+                        <select id="course-instructor" required>
+                            <option value="">Select a teacher</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancel-course-modal">Cancel</button>
+                        <button type="submit">Save Course</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Add Enrollment Modal -->
+        <div class="modal" id="enrollment-modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Add New Enrollment</h2>
+                    <button type="button" id="close-enrollment-modal" aria-label="Close">&times;</button>
+                </div>
+
+                <form id="enrollment-form">
+
+                    <div class="form-group">
+                        <label for="enrollment-student">Select Student</label>
+                        <select id="enrollment-student" required>
+                            <option value="">Choose a student</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enrollment-course">Select Course</label>
+                        <select id="enrollment-course" required>
+                            <option value="">Choose a course</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enrollment-date">Enrollment Date</label>
+                        <input type="date" id="enrollment-date" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enrollment-status">Enrollment Status</label>
+                        <select id="enrollment-status" required>
+                            <option value="Enrolled">Enrolled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Dropped">Dropped</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancel-enrollment-modal">Cancel</button>
+                        <button type="submit">Save Enrollment</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Grade Modal -->
+        <div class="modal" id="grade-modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Add New Grade</h2>
+                    <button type="button" id="close-grade-modal" aria-label="Close">&times;</button>
+                </div>
+
+                <form id="grade-form">
+
+                    <div class="form-group">
+                        <label for="grade-student">Select Student</label>
+                        <select id="grade-student" required>
+                            <option value="">Choose a student</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="grade-course">Select Enrolled Course</label>
+                        <select id="grade-course" required>
+                            <option value="">Choose a course</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="grade-score">Enter Score</label>
+                        <input type="number" id="grade-score" min="0" max="100" step="0.01"
+                            placeholder="Enter score (0–100)" required />
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancel-grade-modal">
+                            Cancel
+                        </button>
+                        <button type="submit">Save Grade</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/students.js"></script>
+    <script src="js/teachers.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/enrollments.js"></script>
+    <script src="js/grades.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
